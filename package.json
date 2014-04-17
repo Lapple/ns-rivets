@@ -8,7 +8,7 @@
     "README.md"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "examples": "node_modules/.bin/grunt examples && node_modules/.bin/http-server ."
   },
   "repository": {
     "type": "git",
@@ -30,6 +30,8 @@
     "yate": "0.0.70",
     "grunt-yate": "0.0.17",
     "load-grunt-tasks": "^0.4.0",
-    "grunt": "^0.4.4"
+    "grunt": "^0.4.4",
+    "http-server": "^0.6.1",
+    "grunt-cli": "^0.1.13"
   }
 }
