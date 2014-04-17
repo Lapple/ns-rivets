@@ -1,0 +1,23 @@
+{
+  "name": "ns-rivets",
+  "version": "0.0.1",
+  "description": "Rivets adapter for Noscript MVC framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Lapple/ns-rivets.git"
+  },
+  "keywords": [
+    "noscript",
+    "rivets"
+  ],
+  "author": "Aziz Yuldashev <yuldoshev.aziz@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Lapple/ns-rivets/issues"
+  },
+  "homepage": "https://github.com/Lapple/ns-rivets"
+}
