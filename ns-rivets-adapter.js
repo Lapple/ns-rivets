@@ -1,6 +1,6 @@
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
-        define(['noscript', 'rivets', 'nommon'], factory);
+        define(['noscript', 'rivets'], factory);
     } else if (typeof exports === 'object') {
         module.exports = factory(require('noscript'), require('rivets'));
     } else {
