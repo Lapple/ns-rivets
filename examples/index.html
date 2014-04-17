@@ -1,0 +1,41 @@
+<!doctype html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Examples</title>
+        <link href="http://fonts.googleapis.com/css?family=Lato:400,700|Montserrat:700" rel="stylesheet" type="text/css">
+        <link href="index.css" rel="stylesheet" type="text/css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <div id="app"></div>
+
+        <script src="http://yandex.st/jquery/1.11.0/jquery.js"></script>
+        <script src="../node_modules/rivets/dist/rivets.js"></script>
+        <script src="../node_modules/noscript/dist/noscript.js"></script>
+        <script src="../ns-rivets-adapter.js"></script>
+
+        <script src="rivets-formatters.js"></script>
+
+        <script src="model-message.js"></script>
+        <script src="model-messages.js"></script>
+
+        <script src="templates.js"></script>
+        <script src="view-app.js"></script>
+        <script src="view-messages.js"></script>
+        <script src="layout-main.js"></script>
+
+        <script type="text/javascript">
+            ns.router.baseDir = '/examples';
+
+            ns.router.routes = {
+                route: {
+                    '/': 'main'
+                }
+            };
+
+            $(ns.init);
+        </script>
+    </body>
+</html>

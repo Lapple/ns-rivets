@@ -1,0 +1,50 @@
+match .messages ns-view-content {
+    <div class="b-messages" rv-class-b-messages_expanded="models.messages:expanded">
+        <div class="b-messages__refresh">
+            <button rv-on-click="view.refresh" rv-disabled="models.messages:loading">
+                'Refresh'
+            </button>
+        </div>
+
+        <div class="b-messages__title">
+            'Inbox '
+            <span class="b-messages__loader" rv-show="models.messages:loading">
+                'Loading'
+            </span>
+        </div>
+
+        // TODO: Extract to component
+        <div class="b-message" rv-each-message="models.messages*" rv-class-b-message_checked="message:checked">
+            <div class="b-message__date">
+                '{{ message:date }}'
+            </div>
+
+            <input type="checkbox" rv-checked="message:checked" />
+
+            <div class="b-message__star" rv-class-b-message__star_hl="message:starred"></div>
+
+            <div class="b-message__from" rv-class-b-message__from_fresh="message:fresh">
+                '{{ message:participants | join }}'
+                <span rv-show="message:count">
+                    ' ({{ message:count }})'
+                </span>
+            </div>
+
+            <div class="b-message__title" rv-class-b-message__title_fresh="message:fresh">
+                <span class="b-message__tag" rv-each-tag="message:tags">
+                    '{{ tag }}'
+                </span>
+
+                '{{ message:title }}'
+            </div>
+        </div>
+
+        <div class="copyright">
+            'Design courtesy of '
+            <a href="http://dribbble.com/shots/829195-Slate">
+                'Eduardo Santos'
+            </a>
+            '.'
+        </div>
+    </div>
+}

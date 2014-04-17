@@ -2,7 +2,7 @@
   "name": "ns-rivets",
   "version": "0.0.1",
   "description": "Rivets adapter for Noscript MVC framework",
-  "main": "index.js",
+  "main": "ns-rivets-adapter.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,5 +19,13 @@
   "bugs": {
     "url": "https://github.com/Lapple/ns-rivets/issues"
   },
-  "homepage": "https://github.com/Lapple/ns-rivets"
+  "homepage": "https://github.com/Lapple/ns-rivets",
+  "devDependencies": {
+    "rivets": "^0.6.7",
+    "noscript": "^0.1.12",
+    "yate": "0.0.70",
+    "grunt-yate": "0.0.17",
+    "load-grunt-tasks": "^0.4.0",
+    "grunt": "^0.4.4"
+  }
 }
