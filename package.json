@@ -3,6 +3,10 @@
   "version": "0.0.1",
   "description": "Rivets adapter for Noscript MVC framework",
   "main": "ns-rivets-adapter.js",
+  "files": [
+    "ns-rivets-adapter.js",
+    "README.md"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
