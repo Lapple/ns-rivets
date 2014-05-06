@@ -1,7 +1,5 @@
 ns.View.define('messages', {
-    models: {
-        messages: false
-    },
+    models: ['messages'],
     methods: {
         refresh: function() {
             this.getModel('messages').refresh();
