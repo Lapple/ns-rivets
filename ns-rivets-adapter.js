@@ -50,6 +50,42 @@
         return null;
     };
 
+    /**
+     * Checks whether given `eventName` and `eventData` describe the change
+     * that is tracked by the given binding.
+     * FIXME: Compare models, not only keypaths.
+     * @param  {String}         eventName
+     * @param  {String|Object}  eventData
+     * @param  {Binding}        binding
+     * @return {Boolean}
+     */
+    var doesBindingMatchUpdate = function(eventName, eventData, binding) {
+        if (eventName === CHANGED_EVENT) {
+            // Checking sub-bindings, located inside of `rv-each` binding.
+            if (binding.iterated) {
+                return binding.iterated.some(function(view) {
+                    return view.bindings.some(doesBindingMatchUpdate.bind(null, eventName, eventData));
+                });
+            }
+
+            // For `ns-model-changed` event, the second argument is either
+            // the jpath that corresponds to the updated attribute, or,
+            // in case of `ModelCollection`, an object containing the
+            // information about updated child model.
+            var boundJpath = getJpathFromKeypath(binding.keypath);
+
+            if (typeof eventData === 'string') {
+                return boundJpath === eventData;
+            } else {
+                return boundJpath === eventData.jpath;
+            }
+        }
+
+        if (eventName === INSERT_EVENT || eventName === REMOVE_EVENT) {
+            return binding.keypath.indexOf(ITERATION_ADAPTER) !== -1;
+        }
+    };
+
     rivets.configure({
         handler: function(target, event, binding) {
             this.call(binding.model, event, binding);
@@ -105,14 +141,11 @@
         }
     };
 
-    var View = ns.View;
-    var ViewPrototype = View.prototype;
-
     var ViewRivets = function() {};
 
-    return no.inherit(ViewRivets, View, {
+    return no.inherit(ViewRivets, ns.View, {
         _init: function() {
-            ViewPrototype._init.apply(this, arguments);
+            ns.View.prototype._init.apply(this, arguments);
 
             this.on('ns-view-htmlinit', this._bindRivetsView);
             this.on('ns-view-htmldestroy', this._unbindRivetsView);
@@ -126,49 +159,11 @@
         _unbindRivetsView: function() {
             this._rivetsView.unbind();
         },
-        invalidate: function(eventName, data) {
-            var _invalidate = ViewPrototype.invalidate;
-
-            /**
-             * Checks whether given binding synchronizes DOM and model.
-             * TODO: Check for the model, now checks only for keypath
-             * matching.
-             * @param  {Binding} binding
-             * @return {Boolean}
-             */
-            var isMatchingBinding = function(binding) {
-                // For `ns-model-changed` event, the second argument is
-                // either the jpath that corresponds to the updated
-                // attribute, or, in case of `ModelCollection`, an object
-                // containing the information about updated child model.
-                if (eventName === CHANGED_EVENT) {
-                    var boundJpath = getJpathFromKeypath(binding.keypath);
-                    var found = false;
-
-                    if (typeof data === 'string') {
-                        found = (boundJpath === data);
-                    } else {
-                        found = (boundJpath === data.jpath);
-                    }
-
-                    if (found) {
-                        return true;
-                    }
-
-                    if (binding.iterated) {
-                        return binding.iterated.some(function(view) {
-                            return view.bindings.some(isMatchingBinding);
-                        });
-                    }
-                }
-
-                if (eventName === INSERT_EVENT || eventName === REMOVE_EVENT) {
-                    return binding.keypath.indexOf(ITERATION_ADAPTER) !== -1;
-                }
-            };
+        invalidate: function(eventName, eventData) {
+            var _invalidate = ns.View.prototype.invalidate;
 
             if (typeof eventName === 'string') {
-                if (this._rivetsView.bindings.some(isMatchingBinding)) {
+                if (this._rivetsView.bindings.some(doesBindingMatchUpdate.bind(null, eventName, eventData))) {
                     this.keepValid();
                 } else {
                     _invalidate.apply(this, arguments);
